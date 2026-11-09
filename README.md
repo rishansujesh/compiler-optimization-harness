@@ -48,3 +48,5 @@ The workloads time their own kernel regions with `CLOCK_MONOTONIC`; Python launc
 This is a controlled experiment tool, not a general autotuner or a sandbox for hostile code. It only runs bundled sources, but the selected compiler is executable code. Resource limits are per process and process groups cannot contain a malicious program that deliberately escapes its session; use a container/VM for untrusted tools. Linux is currently required. Checksums catch many miscompilations, but they are not a proof of algorithm correctness. There is no claim of stable performance superiority across CPUs or compiler versions.
 
 Version 0.1.0 is an initial tested implementation. See [contribution guidelines](CONTRIBUTING.md) and the MIT [license](LICENSE).
+
+Local test evidence and unexecuted platform checks are listed in the [validation record](docs/validation.md).

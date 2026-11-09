@@ -1,0 +1,25 @@
+workload,id,status,flags,median_seconds,mad_seconds,speedup_vs_O2
+gemm,0,ok,-O2,0.057559158,0.0018524129999999972,1.0
+gemm,1,ok,-O1 -fno-tree-vectorize -finline-functions -fno-unswitch-loops -fno-ipa-cp,0.12370898,0.005464444999999998,0.465278737242842
+gemm,2,ok,-Os -fno-peel-loops -fno-unswitch-loops -fno-ipa-cp -fvect-cost-model=cheap,0.122052638,0.00612139099999999,0.47159290403866566
+gemm,3,ok,-Os -ftree-vectorize -fno-inline-functions -fomit-frame-pointer -fno-unswitch-loops -fgcse -fipa-cp -fvect-cost-model=dynamic,0.123506852,0.002162131999999997,0.4660401999396762
+gemm,4,ok,-O2 -ftree-vectorize -fstrict-aliasing -funswitch-loops -fgcse -fno-ipa-cp -fvect-cost-model=dynamic,0.058782456,0.0021814859999999964,0.9791894030422955
+gemm,5,ok,-O1 -fno-unroll-loops -ftree-vectorize -fno-inline-functions -fstrict-aliasing -fno-unswitch-loops -fgcse -fno-ipa-cp -fvect-cost-model=dynamic,0.059368553,0.004306213999999996,0.9695226696867616
+gemm,6,ok,-O2 -fno-unroll-loops -fno-omit-frame-pointer -fpeel-loops -fvect-cost-model=unlimited,0.060398575,0.0031609650000000017,0.9529886756434236
+gemm,7,ok,-O3 -funroll-loops -fno-tree-vectorize -finline-functions -fstrict-aliasing -fpeel-loops -fno-gcse -fipa-cp,0.131515171,0.005086755999999998,0.43766173561831895
+fft,0,ok,-O2,0.025185008,0.0014869759999999975,1.0
+fft,1,ok,-O1 -fno-tree-vectorize -finline-functions -fno-unswitch-loops -fno-ipa-cp,0.027774899,0.0007304960000000006,0.9067542603845292
+fft,2,ok,-Os -fno-peel-loops -fno-unswitch-loops -fno-ipa-cp -fvect-cost-model=cheap,0.045419944,0.0017977240000000005,0.5544922732621599
+fft,3,ok,-Os -ftree-vectorize -fno-inline-functions -fomit-frame-pointer -fno-unswitch-loops -fgcse -fipa-cp -fvect-cost-model=dynamic,0.047878062,0.0021271650000000003,0.5260239647962359
+fft,4,ok,-O2 -ftree-vectorize -fstrict-aliasing -funswitch-loops -fgcse -fno-ipa-cp -fvect-cost-model=dynamic,0.029279785,0.0036194969999999993,0.8601500318393731
+fft,5,ok,-O1 -fno-unroll-loops -ftree-vectorize -fno-inline-functions -fstrict-aliasing -fno-unswitch-loops -fgcse -fno-ipa-cp -fvect-cost-model=dynamic,0.026643321,0.0015281890000000027,0.945265344361538
+fft,6,ok,-O2 -fno-unroll-loops -fno-omit-frame-pointer -fpeel-loops -fvect-cost-model=unlimited,0.027694345,0.004759375999999999,0.9093917187786893
+fft,7,ok,-O3 -funroll-loops -fno-tree-vectorize -finline-functions -fstrict-aliasing -fpeel-loops -fno-gcse -fipa-cp,0.025126368,0.0011462279999999991,1.002333803277895
+ray,0,ok,-O2,0.02692254,0.0019913189999999983,1.0
+ray,1,ok,-O1 -fno-tree-vectorize -finline-functions -fno-unswitch-loops -fno-ipa-cp,0.027512897,0.0010710860000000023,0.9785425358878055
+ray,2,ok,-Os -fno-peel-loops -fno-unswitch-loops -fno-ipa-cp -fvect-cost-model=cheap,0.059280625,0.002778405999999997,0.4541541186517517
+ray,3,ok,-Os -ftree-vectorize -fno-inline-functions -fomit-frame-pointer -fno-unswitch-loops -fgcse -fipa-cp -fvect-cost-model=dynamic,0.056389551,0.0006834520000000011,0.477438453092134
+ray,4,ok,-O2 -ftree-vectorize -fstrict-aliasing -funswitch-loops -fgcse -fno-ipa-cp -fvect-cost-model=dynamic,0.025860683,0.0008045340000000026,1.0410606711354067
+ray,5,ok,-O1 -fno-unroll-loops -ftree-vectorize -fno-inline-functions -fstrict-aliasing -fno-unswitch-loops -fgcse -fno-ipa-cp -fvect-cost-model=dynamic,0.026026876,0.0015996679999999985,1.0344130428868987
+ray,6,ok,-O2 -fno-unroll-loops -fno-omit-frame-pointer -fpeel-loops -fvect-cost-model=unlimited,0.026142122,0.0006431140000000002,1.0298528941147165
+ray,7,ok,-O3 -funroll-loops -fno-tree-vectorize -finline-functions -fstrict-aliasing -fpeel-loops -fno-gcse -fipa-cp,0.027296348,0.0015811749999999972,0.9863055673235115

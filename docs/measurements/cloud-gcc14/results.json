@@ -1,0 +1,1234 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-09T20:51:43.097527+00:00",
+  "environment": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "python": "3.12.14",
+    "compiler": "/usr/bin/gcc",
+    "compiler_version": "gcc (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "cpu_count": 3,
+    "cpu_model": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "allowed_cpus": [
+      0,
+      1,
+      2
+    ]
+  },
+  "settings": {
+    "budget": 8,
+    "seed": 42,
+    "runs": 7,
+    "warmups": 2,
+    "compile_jobs": 2,
+    "target_seconds": 0.05,
+    "cpu": null,
+    "limits": {
+      "timeout": 15,
+      "memory_mb": 1024,
+      "file_mb": 16
+    }
+  },
+  "workloads": [
+    {
+      "name": "gemm",
+      "source_sha256": "6175966f6c1109125eb449388884ba5d11939db9e574dda9a1b051359aaaa629",
+      "configurations": [
+        {
+          "id": 0,
+          "flags": [
+            "-O2"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/gemm.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/gemm-1"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.2665807930000028,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.124826878,
+            0.057559158,
+            0.05532206,
+            0.055706745,
+            0.058322767,
+            0.061324723,
+            0.05601965
+          ],
+          "median_seconds": 0.057559158,
+          "mad_seconds": 0.0018524129999999972,
+          "relative_mad": 0.03218276751025436,
+          "min_seconds": 0.05532206,
+          "max_seconds": 0.124826878,
+          "speedup_vs_O2": 1.0
+        },
+        {
+          "id": 1,
+          "flags": [
+            "-O1",
+            "-fno-tree-vectorize",
+            "-finline-functions",
+            "-fno-unswitch-loops",
+            "-fno-ipa-cp"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O1",
+              "-fno-tree-vectorize",
+              "-finline-functions",
+              "-fno-unswitch-loops",
+              "-fno-ipa-cp",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/gemm.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/gemm-2"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.2204822610000292,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.14758746,
+            0.145643803,
+            0.123415327,
+            0.121288508,
+            0.12370898,
+            0.118244535,
+            0.148457237
+          ],
+          "median_seconds": 0.12370898,
+          "mad_seconds": 0.005464444999999998,
+          "relative_mad": 0.04417177314047855,
+          "min_seconds": 0.118244535,
+          "max_seconds": 0.148457237,
+          "speedup_vs_O2": 0.465278737242842
+        },
+        {
+          "id": 2,
+          "flags": [
+            "-Os",
+            "-fno-peel-loops",
+            "-fno-unswitch-loops",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=cheap"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-Os",
+              "-fno-peel-loops",
+              "-fno-unswitch-loops",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=cheap",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/gemm.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/gemm-3"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.16471930500006238,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.252122251,
+            0.115906195,
+            0.122052638,
+            0.122007127,
+            0.128174029,
+            0.198041101,
+            0.119487232
+          ],
+          "median_seconds": 0.122052638,
+          "mad_seconds": 0.00612139099999999,
+          "relative_mad": 0.05015369680088348,
+          "min_seconds": 0.115906195,
+          "max_seconds": 0.252122251,
+          "speedup_vs_O2": 0.47159290403866566
+        },
+        {
+          "id": 3,
+          "flags": [
+            "-Os",
+            "-ftree-vectorize",
+            "-fno-inline-functions",
+            "-fomit-frame-pointer",
+            "-fno-unswitch-loops",
+            "-fgcse",
+            "-fipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-Os",
+              "-ftree-vectorize",
+              "-fno-inline-functions",
+              "-fomit-frame-pointer",
+              "-fno-unswitch-loops",
+              "-fgcse",
+              "-fipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/gemm.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/gemm-4"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.21762649499999043,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.163343367,
+            0.122662468,
+            0.127161202,
+            0.123506852,
+            0.122962691,
+            0.135538839,
+            0.12134472
+          ],
+          "median_seconds": 0.123506852,
+          "mad_seconds": 0.002162131999999997,
+          "relative_mad": 0.01750617042688447,
+          "min_seconds": 0.12134472,
+          "max_seconds": 0.163343367,
+          "speedup_vs_O2": 0.4660401999396762
+        },
+        {
+          "id": 4,
+          "flags": [
+            "-O2",
+            "-ftree-vectorize",
+            "-fstrict-aliasing",
+            "-funswitch-loops",
+            "-fgcse",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "-ftree-vectorize",
+              "-fstrict-aliasing",
+              "-funswitch-loops",
+              "-fgcse",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/gemm.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/gemm-5"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.21581702799994673,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.119570023,
+            0.05660097,
+            0.058454083,
+            0.059537711,
+            0.054898589,
+            0.064891527,
+            0.058782456
+          ],
+          "median_seconds": 0.058782456,
+          "mad_seconds": 0.0021814859999999964,
+          "relative_mad": 0.037111174803584196,
+          "min_seconds": 0.054898589,
+          "max_seconds": 0.119570023,
+          "speedup_vs_O2": 0.9791894030422955
+        },
+        {
+          "id": 5,
+          "flags": [
+            "-O1",
+            "-fno-unroll-loops",
+            "-ftree-vectorize",
+            "-fno-inline-functions",
+            "-fstrict-aliasing",
+            "-fno-unswitch-loops",
+            "-fgcse",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O1",
+              "-fno-unroll-loops",
+              "-ftree-vectorize",
+              "-fno-inline-functions",
+              "-fstrict-aliasing",
+              "-fno-unswitch-loops",
+              "-fgcse",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/gemm.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/gemm-6"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.2160500630000115,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.122678204,
+            0.066577999,
+            0.055062339,
+            0.059368553,
+            0.054916344,
+            0.058975626,
+            0.06317485
+          ],
+          "median_seconds": 0.059368553,
+          "mad_seconds": 0.004306213999999996,
+          "relative_mad": 0.07253358524672138,
+          "min_seconds": 0.054916344,
+          "max_seconds": 0.122678204,
+          "speedup_vs_O2": 0.9695226696867616
+        },
+        {
+          "id": 6,
+          "flags": [
+            "-O2",
+            "-fno-unroll-loops",
+            "-fno-omit-frame-pointer",
+            "-fpeel-loops",
+            "-fvect-cost-model=unlimited"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "-fno-unroll-loops",
+              "-fno-omit-frame-pointer",
+              "-fpeel-loops",
+              "-fvect-cost-model=unlimited",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/gemm.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/gemm-7"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.21941227600007096,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.076094651,
+            0.062408715,
+            0.053947154,
+            0.05723761,
+            0.079960564,
+            0.059424324,
+            0.060398575
+          ],
+          "median_seconds": 0.060398575,
+          "mad_seconds": 0.0031609650000000017,
+          "relative_mad": 0.05233509234282434,
+          "min_seconds": 0.053947154,
+          "max_seconds": 0.079960564,
+          "speedup_vs_O2": 0.9529886756434236
+        },
+        {
+          "id": 7,
+          "flags": [
+            "-O3",
+            "-funroll-loops",
+            "-fno-tree-vectorize",
+            "-finline-functions",
+            "-fstrict-aliasing",
+            "-fpeel-loops",
+            "-fno-gcse",
+            "-fipa-cp"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O3",
+              "-funroll-loops",
+              "-fno-tree-vectorize",
+              "-finline-functions",
+              "-fstrict-aliasing",
+              "-fpeel-loops",
+              "-fno-gcse",
+              "-fipa-cp",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/gemm.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/gemm-8"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.26954344900002525,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.226572836,
+            0.126428415,
+            0.126105445,
+            0.145425678,
+            0.129491017,
+            0.13215494,
+            0.131515171
+          ],
+          "median_seconds": 0.131515171,
+          "mad_seconds": 0.005086755999999998,
+          "relative_mad": 0.0386780928870936,
+          "min_seconds": 0.126105445,
+          "max_seconds": 0.226572836,
+          "speedup_vs_O2": 0.43766173561831895
+        }
+      ],
+      "repetitions": 44,
+      "reference_checksum": 20042471.711207703
+    },
+    {
+      "name": "fft",
+      "source_sha256": "603d4cda0b6903247d249ec88e14cc03d78268c0cbdbe357f8711fa5f205b3b5",
+      "configurations": [
+        {
+          "id": 0,
+          "flags": [
+            "-O2"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/fft.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/fft-1"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.30184736400008205,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.024224437,
+            0.025838066,
+            0.029755185,
+            0.025185008,
+            0.023698032,
+            0.032687492,
+            0.023670812
+          ],
+          "median_seconds": 0.025185008,
+          "mad_seconds": 0.0014869759999999975,
+          "relative_mad": 0.0590421094962526,
+          "min_seconds": 0.023670812,
+          "max_seconds": 0.032687492,
+          "speedup_vs_O2": 1.0
+        },
+        {
+          "id": 1,
+          "flags": [
+            "-O1",
+            "-fno-tree-vectorize",
+            "-finline-functions",
+            "-fno-unswitch-loops",
+            "-fno-ipa-cp"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O1",
+              "-fno-tree-vectorize",
+              "-finline-functions",
+              "-fno-unswitch-loops",
+              "-fno-ipa-cp",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/fft.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/fft-2"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.28568225599997277,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.026883579,
+            0.028505395,
+            0.02893785,
+            0.027774899,
+            0.027250826,
+            0.042876203,
+            0.027461857
+          ],
+          "median_seconds": 0.027774899,
+          "mad_seconds": 0.0007304960000000006,
+          "relative_mad": 0.026300581687083747,
+          "min_seconds": 0.026883579,
+          "max_seconds": 0.042876203,
+          "speedup_vs_O2": 0.9067542603845292
+        },
+        {
+          "id": 2,
+          "flags": [
+            "-Os",
+            "-fno-peel-loops",
+            "-fno-unswitch-loops",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=cheap"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-Os",
+              "-fno-peel-loops",
+              "-fno-unswitch-loops",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=cheap",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/fft.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/fft-3"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.2692556260000174,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.052020756,
+            0.044869135,
+            0.043592719,
+            0.050749087,
+            0.044814068,
+            0.045419944,
+            0.047217668
+          ],
+          "median_seconds": 0.045419944,
+          "mad_seconds": 0.0017977240000000005,
+          "relative_mad": 0.03958005760641186,
+          "min_seconds": 0.043592719,
+          "max_seconds": 0.052020756,
+          "speedup_vs_O2": 0.5544922732621599
+        },
+        {
+          "id": 3,
+          "flags": [
+            "-Os",
+            "-ftree-vectorize",
+            "-fno-inline-functions",
+            "-fomit-frame-pointer",
+            "-fno-unswitch-loops",
+            "-fgcse",
+            "-fipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-Os",
+              "-ftree-vectorize",
+              "-fno-inline-functions",
+              "-fomit-frame-pointer",
+              "-fno-unswitch-loops",
+              "-fgcse",
+              "-fipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/fft.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/fft-4"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.26600980599994273,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.057998361,
+            0.045750897,
+            0.047346674,
+            0.049609508,
+            0.0408094,
+            0.047878062,
+            0.050007521
+          ],
+          "median_seconds": 0.047878062,
+          "mad_seconds": 0.0021271650000000003,
+          "relative_mad": 0.04442880332123719,
+          "min_seconds": 0.0408094,
+          "max_seconds": 0.057998361,
+          "speedup_vs_O2": 0.5260239647962359
+        },
+        {
+          "id": 4,
+          "flags": [
+            "-O2",
+            "-ftree-vectorize",
+            "-fstrict-aliasing",
+            "-funswitch-loops",
+            "-fgcse",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "-ftree-vectorize",
+              "-fstrict-aliasing",
+              "-funswitch-loops",
+              "-fgcse",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/fft.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/fft-5"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.32787558200004696,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.032434283,
+            0.030396207,
+            0.024909952,
+            0.025348399,
+            0.029279785,
+            0.04183441,
+            0.025660288
+          ],
+          "median_seconds": 0.029279785,
+          "mad_seconds": 0.0036194969999999993,
+          "relative_mad": 0.12361760853093694,
+          "min_seconds": 0.024909952,
+          "max_seconds": 0.04183441,
+          "speedup_vs_O2": 0.8601500318393731
+        },
+        {
+          "id": 5,
+          "flags": [
+            "-O1",
+            "-fno-unroll-loops",
+            "-ftree-vectorize",
+            "-fno-inline-functions",
+            "-fstrict-aliasing",
+            "-fno-unswitch-loops",
+            "-fgcse",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O1",
+              "-fno-unroll-loops",
+              "-ftree-vectorize",
+              "-fno-inline-functions",
+              "-fstrict-aliasing",
+              "-fno-unswitch-loops",
+              "-fgcse",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/fft.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/fft-6"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.16494835700007116,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.024959581,
+            0.028493248,
+            0.028627688,
+            0.025115132,
+            0.026643321,
+            0.026248267,
+            0.027786911
+          ],
+          "median_seconds": 0.026643321,
+          "mad_seconds": 0.0015281890000000027,
+          "relative_mad": 0.05735730166671049,
+          "min_seconds": 0.024959581,
+          "max_seconds": 0.028627688,
+          "speedup_vs_O2": 0.945265344361538
+        },
+        {
+          "id": 6,
+          "flags": [
+            "-O2",
+            "-fno-unroll-loops",
+            "-fno-omit-frame-pointer",
+            "-fpeel-loops",
+            "-fvect-cost-model=unlimited"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "-fno-unroll-loops",
+              "-fno-omit-frame-pointer",
+              "-fpeel-loops",
+              "-fvect-cost-model=unlimited",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/fft.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/fft-7"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.21891613200000393,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.027694345,
+            0.033305421,
+            0.032545526,
+            0.026608536,
+            0.022934969,
+            0.028192981,
+            0.022468683
+          ],
+          "median_seconds": 0.027694345,
+          "mad_seconds": 0.004759375999999999,
+          "relative_mad": 0.17185371237341052,
+          "min_seconds": 0.022468683,
+          "max_seconds": 0.033305421,
+          "speedup_vs_O2": 0.9093917187786893
+        },
+        {
+          "id": 7,
+          "flags": [
+            "-O3",
+            "-funroll-loops",
+            "-fno-tree-vectorize",
+            "-finline-functions",
+            "-fstrict-aliasing",
+            "-fpeel-loops",
+            "-fno-gcse",
+            "-fipa-cp"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O3",
+              "-funroll-loops",
+              "-fno-tree-vectorize",
+              "-finline-functions",
+              "-fstrict-aliasing",
+              "-fpeel-loops",
+              "-fno-gcse",
+              "-fipa-cp",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/fft.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/fft-8"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.37822308900001644,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.026045739,
+            0.024964974,
+            0.023703474,
+            0.025126368,
+            0.029367017,
+            0.023755242,
+            0.026272596
+          ],
+          "median_seconds": 0.025126368,
+          "mad_seconds": 0.0011462279999999991,
+          "relative_mad": 0.04561853109848583,
+          "min_seconds": 0.023703474,
+          "max_seconds": 0.029367017,
+          "speedup_vs_O2": 1.002333803277895
+        }
+      ],
+      "repetitions": 165,
+      "reference_checksum": 1388219201.3344877
+    },
+    {
+      "name": "ray",
+      "source_sha256": "47a8b68ba7fac34f4d13926cdc43bc0ae9cf69385991c533569ad1a08daab0d8",
+      "configurations": [
+        {
+          "id": 0,
+          "flags": [
+            "-O2"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/ray.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/ray-1"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.1684276979999595,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.024931221,
+            0.030662051,
+            0.027631797,
+            0.02692254,
+            0.024692279,
+            0.026652688,
+            0.032290517
+          ],
+          "median_seconds": 0.02692254,
+          "mad_seconds": 0.0019913189999999983,
+          "relative_mad": 0.07396475221134405,
+          "min_seconds": 0.024692279,
+          "max_seconds": 0.032290517,
+          "speedup_vs_O2": 1.0
+        },
+        {
+          "id": 1,
+          "flags": [
+            "-O1",
+            "-fno-tree-vectorize",
+            "-finline-functions",
+            "-fno-unswitch-loops",
+            "-fno-ipa-cp"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O1",
+              "-fno-tree-vectorize",
+              "-finline-functions",
+              "-fno-unswitch-loops",
+              "-fno-ipa-cp",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/ray.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/ray-2"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.1147774930000196,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.026441811,
+            0.031441416,
+            0.027381412,
+            0.027512897,
+            0.02504413,
+            0.027805988,
+            0.050721136
+          ],
+          "median_seconds": 0.027512897,
+          "mad_seconds": 0.0010710860000000023,
+          "relative_mad": 0.03893032420395432,
+          "min_seconds": 0.02504413,
+          "max_seconds": 0.050721136,
+          "speedup_vs_O2": 0.9785425358878055
+        },
+        {
+          "id": 2,
+          "flags": [
+            "-Os",
+            "-fno-peel-loops",
+            "-fno-unswitch-loops",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=cheap"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-Os",
+              "-fno-peel-loops",
+              "-fno-unswitch-loops",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=cheap",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/ray.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/ray-3"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.11771228099996733,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.05586665,
+            0.062059031,
+            0.069299522,
+            0.057747329,
+            0.063588418,
+            0.058014081,
+            0.059280625
+          ],
+          "median_seconds": 0.059280625,
+          "mad_seconds": 0.002778405999999997,
+          "relative_mad": 0.04686870288563923,
+          "min_seconds": 0.05586665,
+          "max_seconds": 0.069299522,
+          "speedup_vs_O2": 0.4541541186517517
+        },
+        {
+          "id": 3,
+          "flags": [
+            "-Os",
+            "-ftree-vectorize",
+            "-fno-inline-functions",
+            "-fomit-frame-pointer",
+            "-fno-unswitch-loops",
+            "-fgcse",
+            "-fipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-Os",
+              "-ftree-vectorize",
+              "-fno-inline-functions",
+              "-fomit-frame-pointer",
+              "-fno-unswitch-loops",
+              "-fgcse",
+              "-fipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/ray.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/ray-4"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.11420253699998284,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.056389551,
+            0.055706099,
+            0.056939838,
+            0.059217915,
+            0.055826449,
+            0.061289037,
+            0.054460798
+          ],
+          "median_seconds": 0.056389551,
+          "mad_seconds": 0.0006834520000000011,
+          "relative_mad": 0.012120188720779157,
+          "min_seconds": 0.054460798,
+          "max_seconds": 0.061289037,
+          "speedup_vs_O2": 0.477438453092134
+        },
+        {
+          "id": 4,
+          "flags": [
+            "-O2",
+            "-ftree-vectorize",
+            "-fstrict-aliasing",
+            "-funswitch-loops",
+            "-fgcse",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "-ftree-vectorize",
+              "-fstrict-aliasing",
+              "-funswitch-loops",
+              "-fgcse",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/ray.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/ray-5"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.11415052699999251,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.028650596,
+            0.024227427,
+            0.033260951,
+            0.026665217,
+            0.025860683,
+            0.025345323,
+            0.025712837
+          ],
+          "median_seconds": 0.025860683,
+          "mad_seconds": 0.0008045340000000026,
+          "relative_mad": 0.031110315222533085,
+          "min_seconds": 0.024227427,
+          "max_seconds": 0.033260951,
+          "speedup_vs_O2": 1.0410606711354067
+        },
+        {
+          "id": 5,
+          "flags": [
+            "-O1",
+            "-fno-unroll-loops",
+            "-ftree-vectorize",
+            "-fno-inline-functions",
+            "-fstrict-aliasing",
+            "-fno-unswitch-loops",
+            "-fgcse",
+            "-fno-ipa-cp",
+            "-fvect-cost-model=dynamic"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O1",
+              "-fno-unroll-loops",
+              "-ftree-vectorize",
+              "-fno-inline-functions",
+              "-fstrict-aliasing",
+              "-fno-unswitch-loops",
+              "-fgcse",
+              "-fno-ipa-cp",
+              "-fvect-cost-model=dynamic",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/ray.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/ray-6"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.11392818699994223,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.031183003,
+            0.027178013,
+            0.027626544,
+            0.026026876,
+            0.024280312,
+            0.025204286,
+            0.023767929
+          ],
+          "median_seconds": 0.026026876,
+          "mad_seconds": 0.0015996679999999985,
+          "relative_mad": 0.061462159346361754,
+          "min_seconds": 0.023767929,
+          "max_seconds": 0.031183003,
+          "speedup_vs_O2": 1.0344130428868987
+        },
+        {
+          "id": 6,
+          "flags": [
+            "-O2",
+            "-fno-unroll-loops",
+            "-fno-omit-frame-pointer",
+            "-fpeel-loops",
+            "-fvect-cost-model=unlimited"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O2",
+              "-fno-unroll-loops",
+              "-fno-omit-frame-pointer",
+              "-fpeel-loops",
+              "-fvect-cost-model=unlimited",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/ray.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/ray-7"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.16465268399997512,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.03096332,
+            0.029566057,
+            0.026323449,
+            0.025499008,
+            0.025563027,
+            0.026142122,
+            0.023348165
+          ],
+          "median_seconds": 0.026142122,
+          "mad_seconds": 0.0006431140000000002,
+          "relative_mad": 0.02460068084756089,
+          "min_seconds": 0.023348165,
+          "max_seconds": 0.03096332,
+          "speedup_vs_O2": 1.0298528941147165
+        },
+        {
+          "id": 7,
+          "flags": [
+            "-O3",
+            "-funroll-loops",
+            "-fno-tree-vectorize",
+            "-finline-functions",
+            "-fstrict-aliasing",
+            "-fpeel-loops",
+            "-fno-gcse",
+            "-fipa-cp"
+          ],
+          "status": "ok",
+          "compile": {
+            "argv": [
+              "/usr/bin/gcc",
+              "-std=c11",
+              "-D_POSIX_C_SOURCE=200809L",
+              "-O3",
+              "-funroll-loops",
+              "-fno-tree-vectorize",
+              "-finline-functions",
+              "-fstrict-aliasing",
+              "-fpeel-loops",
+              "-fno-gcse",
+              "-fipa-cp",
+              "/workspace/compiler-optimization-harness/src/opt_harness/workloads/ray.c",
+              "-lm",
+              "-o",
+              "/tmp/opt-harness-yx266ujg/ray-8"
+            ],
+            "returncode": 0,
+            "elapsed_seconds": 0.16533833800008324,
+            "stdout": "",
+            "stderr": "",
+            "timed_out": false
+          },
+          "samples_seconds": [
+            0.028877523,
+            0.027698753,
+            0.025465918,
+            0.025341992,
+            0.029838729,
+            0.025860638,
+            0.027296348
+          ],
+          "median_seconds": 0.027296348,
+          "mad_seconds": 0.0015811749999999972,
+          "relative_mad": 0.05792624713020207,
+          "min_seconds": 0.025341992,
+          "max_seconds": 0.029838729,
+          "speedup_vs_O2": 0.9863055673235115
+        }
+      ],
+      "repetitions": 19,
+      "reference_checksum": 1795549.5036972798
+    }
+  ]
+}
