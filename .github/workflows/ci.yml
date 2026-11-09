@@ -35,6 +35,16 @@ jobs:
           python-version: '3.12'
       - run: pip install .
       - run: opt-harness --compiler ${{ matrix.compiler }} --budget 4 --runs 3 --warmups 1 --target-seconds 0.003 --output results/smoke
+      - name: Check every curated smoke configuration
+        run: |
+          python - <<'PYTHON'
+          import json
+          report = json.load(open("results/smoke/results.json"))
+          for workload in report["workloads"]:
+              assert "error" not in workload, workload
+              for config in workload["configurations"]:
+                  assert config["status"] == "ok", config
+          PYTHON
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.compiler }}-smoke-results

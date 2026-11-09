@@ -185,3 +185,25 @@ def test_workload_against_independent_math(tmp_path, workload):
         # against the unit right triangle; no cross-product code is reused.
         expected = sum((i % 997) / 997 + 0.01 + (i % 991) / 991 + 0.02 <= 1 for i in range(200000))
     assert math.isclose(actual, expected, rel_tol=1e-10, abs_tol=1e-6)
+
+
+def test_miscompiled_candidate_never_gets_a_speedup(monkeypatch):
+    import importlib
+
+    module = importlib.import_module("opt_harness.experiment")
+
+    def fake_run(argv, limits):
+        if argv[-1] == "--version":
+            return ProcessResult(argv, 0, 0.01, "gcc test compiler", "", False)
+        if "-o" in argv:
+            return ProcessResult(argv, 0, 0.01, "", "", False)
+        return result(checksum=99 if argv[0].endswith("gemm-2") else 12)
+
+    monkeypatch.setattr(module, "run", fake_run)
+    monkeypatch.setattr(module.shutil, "which", lambda _: "/fake/gcc")
+    report = module.experiment(budget=2, runs=3, warmups=1, workloads=("gemm",))
+    baseline, bad = report["workloads"][0]["configurations"]
+    assert baseline["speedup_vs_O2"] == 1
+    assert bad["status"] == "validation_failed"
+    assert bad["samples_seconds"] == []
+    assert "speedup_vs_O2" not in bad
