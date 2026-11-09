@@ -1,4 +1,5 @@
 """Seeded sampling over mutually exclusive flag categories; never accept raw flags."""
+
 from __future__ import annotations
 
 import random
@@ -17,8 +18,11 @@ GCC_GROUPS = (
     ("-fipa-cp", "-fno-ipa-cp"),
     ("-fvect-cost-model=cheap", "-fvect-cost-model=dynamic", "-fvect-cost-model=unlimited"),
 )
-CLANG_GROUPS = GCC_GROUPS[:6] + (("-fvectorize", "-fno-vectorize"),
-                              ("-fslp-vectorize", "-fno-slp-vectorize"))
+CLANG_GROUPS = (
+    GCC_GROUPS[:2]
+    + GCC_GROUPS[3:6]
+    + (("-fvectorize", "-fno-vectorize"), ("-fslp-vectorize", "-fno-slp-vectorize"))
+)
 BASELINE = ("-O2",)
 
 

@@ -1,4 +1,5 @@
 """Bound resource use and terminate the complete process group on timeout."""
+
 from __future__ import annotations
 
 import os
@@ -45,13 +46,25 @@ def run(argv: list[str], limits: Limits, cwd: Path | None = None) -> ProcessResu
     if not argv:
         raise ValueError("empty command")
     launcher = Path(__file__).with_name("limits.py")
-    command = [sys.executable, str(launcher), str(limits.memory_mb), str(limits.timeout),
-               str(limits.file_mb), *map(str, argv)]
+    command = [
+        sys.executable,
+        str(launcher),
+        str(limits.memory_mb),
+        str(limits.timeout),
+        str(limits.file_mb),
+        *map(str, argv),
+    ]
     # Files avoid unbounded communicate() buffers. RLIMIT_FSIZE caps child output.
     with tempfile.TemporaryFile() as out, tempfile.TemporaryFile() as err:
         start = time.perf_counter()
-        process = subprocess.Popen(command, stdout=out, stderr=err, cwd=cwd,
-                                   start_new_session=True, stdin=subprocess.DEVNULL)
+        process = subprocess.Popen(
+            command,
+            stdout=out,
+            stderr=err,
+            cwd=cwd,
+            start_new_session=True,
+            stdin=subprocess.DEVNULL,
+        )
         timed_out = False
         try:
             try:
@@ -68,6 +81,11 @@ def run(argv: list[str], limits: Limits, cwd: Path | None = None) -> ProcessResu
         elapsed = time.perf_counter() - start
         out.seek(0)
         err.seek(0)
-        return ProcessResult(list(map(str, argv)), process.returncode, elapsed,
-                             out.read(65536).decode(errors="replace"),
-                             err.read(65536).decode(errors="replace"), timed_out)
+        return ProcessResult(
+            list(map(str, argv)),
+            process.returncode,
+            elapsed,
+            out.read(65536).decode(errors="replace"),
+            err.read(65536).decode(errors="replace"),
+            timed_out,
+        )
