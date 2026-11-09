@@ -1,0 +1,41 @@
+name: CI
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -e '.[dev]'
+      - run: ruff check . && ruff format --check .
+      - run: pytest -q
+      - run: python -m build
+      - name: Installed wheel includes workloads
+        run: |
+          python -m venv /tmp/harness-wheel
+          /tmp/harness-wheel/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/harness-wheel/bin/opt-harness --compiler gcc --budget 1 --runs 3 --warmups 1 --target-seconds 0.003 --output wheel-results
+  compiler-smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install .
+      - run: opt-harness --compiler ${{ matrix.compiler }} --budget 4 --runs 3 --warmups 1 --target-seconds 0.003 --output results/smoke
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.compiler }}-smoke-results
+          path: results/smoke
